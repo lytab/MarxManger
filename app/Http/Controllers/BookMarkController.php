@@ -18,7 +18,8 @@ class BookMarkController extends Controller
     }
     public function index()
     {
-        return view('home');
+        $bookmarks=BookMark::where('user_id',auth()->user()->id)->get();
+        return view('home')->with('bookmarks',$bookmarks);
 
     }
 
@@ -42,43 +43,13 @@ class BookMarkController extends Controller
         $bookmark->name=$request->name;
         $bookmark->url=$request->url;
         $bookmark->desc=$request->desc;
+        $bookmark->user_id=auth()->user()->id;
         $bookmark->save();
-     
+     return redirect('/home')->with('status','Bookmark Created !!');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\BookMark  $bookMark
-     * @return \Illuminate\Http\Response
-     */
-    public function show(BookMark $bookMark)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\BookMark  $bookMark
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(BookMark $bookMark)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\BookMark  $bookMark
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, BookMark $bookMark)
-    {
-        //
-    }
+  
+   
 
     /**
      * Remove the specified resource from storage.
@@ -86,8 +57,10 @@ class BookMarkController extends Controller
      * @param  \App\BookMark  $bookMark
      * @return \Illuminate\Http\Response
      */
-    public function destroy(BookMark $bookMark)
+    public function destroy($id)
     {
-        //
+        BookMark::findOrFail($id)->delete();
+        return;// redirect('/home')->with('status','Bookmark Deleted !!');
+
     }
 }

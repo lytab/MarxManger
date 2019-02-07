@@ -12,6 +12,21 @@
 
                     <button name="button" id="button" class="btn btn-primary btl-lg" type="button" data-toggle="modal"
                         data-target="#addModal">Add Bookmark</button>
+                        <hr>
+                        <h3>My BookMarks</h3>
+                        @if (count($bookmarks)>0)
+                            <ul class="list-group">
+                                @foreach ($bookmarks as $book)
+                                    
+                                    <li class="list-group-item clearfix">
+                                        <a href="{{$book->url}}" target="_blank" style=""> {{$book->name}} <span class="label label-default">{{$book->desc}}</span></a>
+                                        <span class="pull-right button-group">
+                                            <button type="button" data-id="{{$book->id}}" class="delete-bookmark btn btn-danger" name="button">Delete</button>
+                                        </span>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @endif
                 </div>
             </div>
         </div>
