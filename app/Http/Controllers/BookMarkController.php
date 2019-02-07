@@ -22,15 +22,7 @@ class BookMarkController extends Controller
 
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
+ 
 
     /**
      * Store a newly created resource in storage.
@@ -40,7 +32,18 @@ class BookMarkController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules=[
+            'name'=>'required',
+            'url'=>'required',
+            
+        ];
+        $this->validate($request,$rules);
+        $bookmark=new BookMark();
+        $bookmark->name=$request->name;
+        $bookmark->url=$request->url;
+        $bookmark->desc=$request->desc;
+        $bookmark->save();
+     
     }
 
     /**
